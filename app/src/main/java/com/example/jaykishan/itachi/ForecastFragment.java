@@ -1,5 +1,6 @@
 package com.example.jaykishan.itachi;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,7 +26,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -114,8 +115,21 @@ public class ForecastFragment extends Fragment {
 
         listView.setAdapter(mForeCastAdapter);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                String forecast = mForeCastAdapter.getItem(position);
+
+                //Toast.makeText(getContext(),forecast,Toast.LENGTH_SHORT).show();
+
+                Intent intent= new Intent(getActivity(), DetailActivity.class).
+                        putExtra(Intent.EXTRA_TEXT,forecast);
+                startActivity(intent);
 
 
+            }
+        });
 
 
         return rootView;
@@ -131,12 +145,12 @@ public class ForecastFragment extends Fragment {
         /* The date/time conversion code is going to be moved outside the asynctask later,
          * so for convenience we're breaking it out into its own method now.
          */
-        private String getReadableDateString(long time){
+        /*private String getReadableDateString(long time){
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
             SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
             return shortenedDateFormat.format(time);
-        }
+        }*/
 
         /**
          * Prepare the weather high/lows for presentation.
@@ -212,9 +226,6 @@ public class ForecastFragment extends Fragment {
                 resultStrs[i] = day + " - " + description + " - " + highAndLow;
             }
 
-            for (String s : resultStrs) {
-                Log.v(LOG_TAG, "Forecast entry: " + s);
-            }
             return resultStrs;
 
         }
@@ -225,10 +236,12 @@ public class ForecastFragment extends Fragment {
             {
                 mForeCastAdapter.clear();
 
-                for (String dayForeCast : result)
+                /*for (String dayForeCast : result)
                 {
                     mForeCastAdapter.add(dayForeCast);
-                }
+                }*/
+
+                mForeCastAdapter.addAll(result);
 
             }
 
@@ -277,8 +290,6 @@ public class ForecastFragment extends Fragment {
 
                 URL url = new URL(builtUri.toString());
 
-                Log.v(LOG_TAG, "Built URI " + builtUri.toString());
-
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -307,7 +318,6 @@ public class ForecastFragment extends Fragment {
                 }
                 forecastJsonStr = buffer.toString();
 
-                Log.v(LOG_TAG, "Forecast string: " + forecastJsonStr);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error ", e);
                 // If the code didn't successfully get the weather data, there's no point in attemping
