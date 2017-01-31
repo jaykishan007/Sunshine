@@ -46,7 +46,7 @@ public class DetailActivityFragment extends Fragment {
         {
             mShareActionProvider.setShareIntent(createShareForecastIntent());
         }else {
-            Log.d(LOG_TAG,"Share Action Provider is Null?");
+            Log.v(LOG_TAG,"Share Action Provider is Null?");
         }
 
 
