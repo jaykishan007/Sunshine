@@ -87,7 +87,7 @@ public class TestUtilities extends AndroidTestCase {
      */
     static long insertNorthPoleLocationValues(Context context) {
         // insert our test records into the database
-        WeatherDBHelper dbHelper = new WeatherDBHelper(context,null,null,0);
+        WeatherDBHelper dbHelper = new WeatherDBHelper(context,WeatherDBHelper.DATABASE_NAME,null,WeatherDBHelper.DATABASE_VERSION);
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues testValues = TestUtilities.createNorthPoleLocationValues();
 
