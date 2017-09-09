@@ -127,6 +127,7 @@ public class ForecastFragment extends Fragment {
                 startActivity(intent);
 
 
+
             }
         });
 
@@ -281,6 +282,8 @@ public class ForecastFragment extends Fragment {
 
             }
         }
+
+
 
         @Override
         protected String[] doInBackground(String... params) {
