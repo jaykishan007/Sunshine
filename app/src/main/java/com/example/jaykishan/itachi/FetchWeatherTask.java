@@ -430,7 +430,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
             for(String dayForecastStr : result) {
                 mForecastAdapter.add(dayForecastStr);
             }
-            // New data is back from the server.  Hooray!
         }
     }
 
