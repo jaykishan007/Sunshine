@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Uchiha</string>
     <string name="action_settings">Settings</string>
+    
+    <string name="open_weather_map_api_key">4ebd6d801adfdf8bdc189805a78eaddd</string>
 
     <string name="action_map">Map Location</string>
     <string name="action_refresh" translatable="false">Refresh</string>
