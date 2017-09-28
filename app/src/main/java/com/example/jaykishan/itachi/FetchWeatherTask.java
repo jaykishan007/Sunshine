@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -32,9 +33,7 @@ import java.util.Vector;
  * Created by jaykishan on 14/09/17.
  */
 
-public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
-
-    private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
+public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {    private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
     private ArrayAdapter<String> mForecastAdapter;
     private final Context mContext;
@@ -45,7 +44,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
     }
 
     private boolean DEBUG = true;
-
 
     /* The date/time conversion code is going to be moved outside the asynctask later,
      * so for convenience we're breaking it out into its own method now.
@@ -108,7 +106,6 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
                 new String[]{locationSetting},
                 null);
 
-        //If exists returns the ID of existing row else create new and return the index
         if (locationCursor.moveToFirst()) {
             int locationIdIndex = locationCursor.getColumnIndex(WeatherContract.LocationEntry._ID);
             locationId = locationCursor.getLong(locationIdIndex);
@@ -117,6 +114,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
             // First create a ContentValues object to hold the data you want to insert.
             ContentValues locationValues = new ContentValues();
 
+            // Then add the data, along with the corresponding name of the data type,
+            // so the content provider knows what kind of value is being inserted.
             locationValues.put(WeatherContract.LocationEntry.COLUMN_CITY_NAME, cityName);
             locationValues.put(WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING, locationSetting);
             locationValues.put(WeatherContract.LocationEntry.COLUMN_COORD_LAT, lat);
@@ -290,7 +289,9 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
 
             // add to database
             if ( cVVector.size() > 0 ) {
-                // Student: call bulkInsert to add the weatherEntries to the database here
+                ContentValues[] cvArray = new ContentValues[cVVector.size()];
+                cVVector.toArray(cvArray);
+                mContext.getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, cvArray);
             }
 
             // Sort order:  Ascending, by date.
@@ -299,18 +300,17 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
                     locationSetting, System.currentTimeMillis());
 
             // Students: Uncomment the next lines to display what what you stored in the bulkInsert
+            Cursor cur = mContext.getContentResolver().query(weatherForLocationUri,
+                    null, null, null, sortOrder);
 
-//            Cursor cur = mContext.getContentResolver().query(weatherForLocationUri,
-//                    null, null, null, sortOrder);
-//
-//            cVVector = new Vector<ContentValues>(cur.getCount());
-//            if ( cur.moveToFirst() ) {
-//                do {
-//                    ContentValues cv = new ContentValues();
-//                    DatabaseUtils.cursorRowToContentValues(cur, cv);
-//                    cVVector.add(cv);
-//                } while (cur.moveToNext());
-//            }
+            cVVector = new Vector<ContentValues>(cur.getCount());
+            if ( cur.moveToFirst() ) {
+                do {
+                    ContentValues cv = new ContentValues();
+                    DatabaseUtils.cursorRowToContentValues(cur, cv);
+                    cVVector.add(cv);
+                } while (cur.moveToNext());
+            }
 
             Log.d(LOG_TAG, "FetchWeatherTask Complete. " + cVVector.size() + " Inserted");
 
@@ -429,9 +429,8 @@ public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
             for(String dayForecastStr : result) {
                 mForecastAdapter.add(dayForecastStr);
             }
+            // New data is back from the server.  Hooray!
         }
     }
-
-
 
 }
