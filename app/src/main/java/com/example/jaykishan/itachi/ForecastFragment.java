@@ -21,7 +21,7 @@ import java.util.ArrayList;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class ForecastFragment extends Fragment {
+public class ForecastFragment extends Fragment{
 
     private ArrayAdapter<String> mForecastAdapter;
 
@@ -114,10 +114,7 @@ public class ForecastFragment extends Fragment {
 
             }
         });
-
-
         return rootView;
-
     }
 
 
