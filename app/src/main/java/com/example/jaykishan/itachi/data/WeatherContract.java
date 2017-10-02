@@ -129,6 +129,11 @@ public class WeatherContract {
             return uri.getPathSegments().get(1);
         }
 
+        public static Uri buildWeatherLocationWithDate(String locationSetting, long date) {
+            return CONTENT_URI.buildUpon().appendPath(locationSetting)
+                    .appendPath(Long.toString(normalizeDate(date))).build();
+        }
+
         public static long getDateFromUri(Uri uri) {
             return Long.parseLong(uri.getPathSegments().get(2));
         }
