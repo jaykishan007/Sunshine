@@ -101,7 +101,7 @@
     <string name="tomorrow">Tomorrow</string>
 
     <!-- Date format for displaying day of week and date (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
-    <!--<string name="format_full_friendly_date">%1$s, %2$s</string>-->
+    <string name="format_full_friendly_date">%1$s, %2$s</string>
 
 
 
