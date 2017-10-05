@@ -105,6 +105,21 @@
 
     <string name="format_temperature">%1.0f \u00B0</string>
 
+    <!-- Windspeed formats -->
+    <!-- Wind in mph [CHAR LIMIT=25] -->
+    <string name="format_wind_mph">Wind: %1$1.0f mph %2$s</string>
+    <!-- Wind in kph [CHAR LIMIT=25] -->
+    <string name="format_wind_kmh">Wind: %1$1.0f km/h %2$s</string>
+
+
+    <!-- Pressure format CHAR LIMIT=25] -->
+    <string name="format_pressure">Pressure: %1.0f hPa</string>
+
+    <!-- Humidity format CHAR LIMIT=25]-->
+    <string name="format_humidity">Humidity: %1.0f %%</string>
+
+
+
 
 
 
