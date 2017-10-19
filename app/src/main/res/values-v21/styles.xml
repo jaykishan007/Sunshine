@@ -7,9 +7,5 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 
-    <style name="ForecastListStyle">
-        <item name="android:choiceMode">singleChoice</item>
-        <!-- Here it's a stub.  In screens of sufficient width, this style includes modifications
-        for two-pane layout -->
-    </style>
+
 </resources>
