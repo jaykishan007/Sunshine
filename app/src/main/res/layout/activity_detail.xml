@@ -7,19 +7,6 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.jaykishan.itachi.DetailActivity">
 
-    <android.support.design.widget.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/bar">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary" />
-
-    </android.support.design.widget.AppBarLayout>
-
     <include layout="@layout/content_detail" />
 
 </android.support.design.widget.CoordinatorLayout>
