@@ -42,6 +42,10 @@ public class SunshineService extends IntentService {
         this.mContext = mContext;
     }
 
+    public SunshineService() {
+        super("Background service");
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         String locationQuery = intent.getStringExtra(LOCATION_QUERY_EXTRA);

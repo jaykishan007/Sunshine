@@ -41,6 +41,9 @@
         <provider
             android:authorities="com.example.jaykishan.itachi"
             android:name=".data.WeatherProvider"/>
+
+        <service android:name=".service.SunshineService"/>
+
     </application>
 
 </manifest>
