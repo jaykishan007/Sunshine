@@ -34,14 +34,9 @@ import java.util.Vector;
 public class SunshineService extends IntentService {
 
     private ArrayAdapter<String> mForecastAdapter;
-    private Context mContext;
     public static final String LOCATION_QUERY_EXTRA = "lqe";
     private final String LOG_TAG = SunshineService.class.getSimpleName();
 
-    public SunshineService(String name, Context mContext) {
-        super(name);
-        this.mContext = mContext;
-    }
 
     public SunshineService() {
         super("Background service");
@@ -80,7 +75,7 @@ public class SunshineService extends IntentService {
                     .appendQueryParameter(FORMAT_PARAM, format)
                     .appendQueryParameter(UNITS_PARAM, units)
                     .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
-                    .appendQueryParameter(APPID_PARAM, mContext.getResources().getString(R.string.open_weather_map_api_key))
+                    .appendQueryParameter(APPID_PARAM, getApplicationContext().getResources().getString(R.string.open_weather_map_api_key))
                     .build();
 
             URL url = new URL(builtUri.toString());
@@ -338,6 +333,7 @@ public class SunshineService extends IntentService {
         @Override
         public void onReceive(Context context, Intent intent) {
             Intent sendIntent = new Intent(context, SunshineService.class);
+
             sendIntent.putExtra(SunshineService.LOCATION_QUERY_EXTRA, intent.getStringExtra(SunshineService.LOCATION_QUERY_EXTRA));
             context.startService(sendIntent);
 
