@@ -118,6 +118,10 @@
     <!-- Humidity format CHAR LIMIT=25]-->
     <string name="format_humidity">Humidity: %1.0f %%</string>
 
+    <!-- SyncAdapter related -->
+    <string name="sync_account_type">sunshine.example.com</string>
+    <string name="content_authority">com.example.jaykishan.itachi</string>
+
 
 
 
